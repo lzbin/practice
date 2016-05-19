@@ -6,7 +6,10 @@
 </head>
 <body>
 <script>
-    /*现在你有一个复杂的多重嵌套的对象，但是你莫名蛋疼，突然就不想用if obj.property == null这个方法。于是乎打算，在Object的原型上创建一个方法（prototype method），传递一个路径，返回undefined 或 值（value）;*/
+    /*
+    现在你有一个复杂的多重嵌套的对象，但是你莫名蛋疼，突然就不想用if obj.property == null这个方法。
+    于是乎打算，在Object的原型上创建一个方法（prototype method），传递一个路径，返回undefined 或 值（value）;
+    */
     Object.prototype.hash = function(path) {
         return path.split('.').reduce(function(obj, key){ return obj && obj[key]; }, this);
     };
