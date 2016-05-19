@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    /*现在你有一个复杂的多重嵌套的对象，但是你莫名蛋疼，突然就不想用if obj.property == null这个方法。于是乎打算，在Object的原型上创建一个方法（prototype method），传递一个路径，返回undefined 或 值（value）;*/
+    Object.prototype.hash = function(path) {
+        return path.split('.').reduce(function(obj, key){ return obj && obj[key]; }, this);
+    };
+
+    var obj = {
+        person: {
+            name: 'joe',
+            history: {
+                hometown: 'bratislava',
+                bio: {
+                    funFact: 'I like fishing.'
+                }
+            }
+        }
+    };
+    /*Object.prototype.hash=function(key){
+        var o=this;
+        if(key){
+            var keys=(key+'').split('.');
+            while (o && keys[0]) {
+                o = o[keys.shift()];
+            }
+            if (keys[0]) {
+                o = undefined;
+            }
+        }
+        return o;
+    };*/
+    console.log(obj.hash('person.name')); // 'joe'
+    console.log(obj.hash('person.history.bio')); // { funFact: 'I like fishing.' }
+    console.log(obj.hash('person.history.homeStreet')); // undefined
+    console.log(obj.hash('person.animal.pet.needNoseAntEater')); // undefined
+</script>
+</body>
+</html>

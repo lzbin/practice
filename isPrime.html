@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    /*创建一个函数isPrime判断传入的参数是否为素数（质数），返回true 或 false。*/
+
+    function isPrime(n){
+        if (n <= 3) { return n > 1; }
+        if (n % 2 == 0 || n % 3 == 0) { return false; }
+
+        for (var  i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) { return false; }
+        }
+        return true;
+    }
+
+    function isPrime1(n){
+        for (var j = 2; j <= Math.sqrt(n); j++) {
+            if (n % j == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    var number = 20;
+
+    console.time('first');
+    console.log(isPrime(number));
+    console.timeEnd('first');
+
+
+    console.time('second');
+    console.log(isPrime1(number));
+    console.timeEnd('second');
+</script>
+</body>
+</html>
