@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+console.log这个是我们经常调试页面的时候用的工具，但是有时候呢，我们只需要这个日志只输出一次(通常出现在node上)，实现以下需求：
+完成一个函数，函数接收一个参数function,执行完了之后第二次就失效~~~
+
+<pre>
+function once(fn){
+    return fn
+}
+
+logOnce = once(console.log)
+logOnce("foo") // -> "foo"
+logOnce("bar") // -> no effect
+</pre>
+
+<script>
+
+    function once(fn){
+        var _fn = fn;
+        return function() {
+            var _f = _fn;
+
+            return _fn ? ( _fn = null ,_f.apply(console,arguments)) : "no effect";
+        }
+    }
+
+
+    logOnce = once(console.log)
+    logOnce("foo") // -> 'foo'
+    logOnce("bar") // -> 'no effect'
+
+</script>
+</body>
+</html>
