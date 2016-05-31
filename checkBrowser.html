@@ -75,33 +75,8 @@
     }
 </script>-->
 <script>
-    var BrowserDetect = {
-        init: function () {
-            this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
-            this.version = this.searchVersion(navigator.userAgent)
-                    || this.searchVersion(navigator.appVersion)
-                    || "an unknown version";
-            this.OS = this.searchString(this.dataOS) || "an unknown OS";
-        },
-        searchString: function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var dataString = data[i].string;
-                var dataProp = data[i].prop;
-                this.versionSearchString = data[i].versionSearch || data[i].identity;
-                if (dataString) {
-                    if (dataString.indexOf(data[i].subString) != -1)
-                        return data[i].identity;
-                }
-                else if (dataProp)
-                    return data[i].identity;
-            }
-        },
-        searchVersion: function (dataString) {
-            var index = dataString.indexOf(this.versionSearchString);
-            if (index == -1) return;
-            return parseFloat(dataString.substring(index + this.versionSearchString.length + 1));
-        },
-        dataBrowser: [
+    function BrowserDetect(){
+        var dataBrowser = [
             {
                 string: navigator.userAgent,
                 subString: "Chrome",
@@ -167,7 +142,7 @@
                 versionSearch: "Mozilla"
             }
         ],
-        dataOS: [
+        dataOS = [
             {
                 string: navigator.platform,
                 subString: "Win",
@@ -188,14 +163,42 @@
                 subString: "Linux",
                 identity: "Linux"
             }
-        ]
+        ],
+        versionSearchString;
 
-    };
-    BrowserDetect.init();
 
-    document.writeln(BrowserDetect.browser);// 浏览器的名称，例如Firefox，IE
-    document.writeln(BrowserDetect.version);//浏览器的版本，比如，7、11
-    document.writeln(BrowserDetect.OS);//浏览器所宿主的操作系统，比如Windows、Linux
+        function searchString(data) {
+            for (var i = 0; i < data.length; i++) {
+                var dataString = data[i].string;
+                var dataProp = data[i].prop;
+                versionSearchString = data[i].versionSearch || data[i].identity;
+                if (dataString) {
+                    if (dataString.indexOf(data[i].subString) != -1)
+                        return data[i].identity;
+                }
+                else if (dataProp)
+                    return data[i].identity;
+            }
+        }
+        function searchVersion(dataString) {
+            var index = dataString.indexOf(versionSearchString);
+            if (index == -1) return;
+            return parseFloat(dataString.substring(index + versionSearchString.length + 1));
+        }
+
+        return {
+            browser : searchString(dataBrowser) || "An unknown browser",
+            version : searchVersion(navigator.userAgent)
+                    || searchVersion(navigator.appVersion)
+                    || "an unknown version",
+            OS : searchString(dataOS) || "an unknown OS"
+        };
+    }
+    var Browser = BrowserDetect();
+
+    document.writeln(Browser.browser);// 浏览器的名称，例如Firefox，IE
+    document.writeln(Browser.version);//浏览器的版本，比如，7、11
+    document.writeln(Browser.OS);//浏览器所宿主的操作系统，比如Windows、Linux
 </script>
 </body>
 </html>
