@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    function add(m) {
+        var r = m;
+
+        function p(n) {
+            r += n;
+            return p;
+        }
+
+        p.valueOf = function () {
+            return r;
+        };
+        return p;
+    }
+
+    console.log(add(1)); // 1
+    add(1)(2); // 3
+    add(1)(2)(3); // 6
+    add(1)(2)(3)(4); // 10
+    console.log(add(1)(2)(3)(4)(5)); // 15
+</script>
+</body>
+</html>
