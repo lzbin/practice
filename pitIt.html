@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+每个首字母位移到单词末位，然后在每个单词末尾添上ay
+PS：只能添加一行代码
+
+<pre>
+function pigIt(str){
+//Code here
+}
+pigIt('Pig latin is cool'); //igPay atinlay siay oolcay
+</pre>
+<script>
+//es5
+/*function pigIt(str){
+    return str.split(' ').map(function(v){return v.slice(1).split('').join('') + v[0] + 'py' }).join(' ');
+}*/
+
+
+function pigIt(str){
+    return str.trim().replace(/\S{1,}/g,function(w){
+        return [w.substr(1), w.substr(0,1),'ay'].join('')
+    })
+}
+// 测试用例
+console.log(pigIt('Pig latin is cool')); //igPay atinlay siay oolcay
+</script>
+</body>
+</html>

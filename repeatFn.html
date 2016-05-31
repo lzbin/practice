@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<pre>
+/**
+ * 返回一个新函数，该函数按定义的次数和间隔执行。
+ * @param  {object} func  函数名称
+ * @param  {number} times 次数
+ * @param  {number} wait  间隔
+ * @return {function}
+ */
+function repeat (func, times, wait) {}
+
+
+// 例如这样用
+var repeatFun = repeat(alert, 10, 5000);
+
+repeatFun('快出来吃猪脑汤啦！！'); // 会alert十次 '快出来吃猪脑汤啦！！'，每次间隔5秒。
+</pre>
+<script>
+    function repeat (func, times, wait) {
+        return function(s){
+            var count = 0;
+            var timer = setInterval(function(){
+                func(s);
+                count++;
+                if(count >= times){
+                    clearInterval(timer);
+                }
+            },wait);
+        }
+    }
+
+    // 例如这样用
+    var repeatFun = repeat(function(w){console.log(w)}, 10, 500);
+
+    repeatFun('快出来吃猪脑汤啦！！'); // 会alert十次 '快出来吃猪脑汤啦！！'，每次间隔5秒。
+</script>
+</body>
+</html>
